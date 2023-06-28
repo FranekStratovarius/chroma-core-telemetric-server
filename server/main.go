@@ -14,9 +14,17 @@ import (
 // }
 
 func main() {
-	http.HandleFunc("/ragequit", upload_ragequit)
-	http.HandleFunc("/win", upload_win)
-	http.HandleFunc("/death", upload_death)
+	var db = connect()
+
+	http.HandleFunc("/ragequit", func(w http.ResponseWriter, r *http.Request) {
+		upload_ragequit(w, r, db)
+	})
+	http.HandleFunc("/win", func(w http.ResponseWriter, r *http.Request) {
+		upload_win(w, r, db)
+	})
+	http.HandleFunc("/death", func(w http.ResponseWriter, r *http.Request) {
+		upload_death(w, r, db)
+	})
 
 	log.Print("Server running...")
 	err := http.ListenAndServe(":1234", nil)

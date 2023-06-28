@@ -1,0 +1,44 @@
+---
+version: "3.8"
+
+networks:
+  backend:
+
+services:
+  database:
+    # build:
+    #   context: .
+    #   dockerfile: service.Dockerfile
+    image: mysql
+    container_name: chroma_core_teletric_database
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_DATABASE: "telemetry"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 2s
+      retries: 240
+      start_period: 10s
+    networks:
+      - backend
+    restart: unless-stopped
+  server:
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    container_name: chroma_core_telemetric_server
+    environment:
+      DBUSER: "root"
+      DBHOST: "database:3306"
+      DBNAME: "telemetry"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - backend
+    ports:
+      - 1234:1234
+    restart: unless-stopped
