@@ -40,8 +40,8 @@ func upload_ragequit(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		fmt.Printf("time for ragequit: %d in level %d at Position %d,%d\n", ragequit.Time, ragequit.Level, ragequit.PositionX, ragequit.PositionY)
-		_, err = db.Exec("INSERT INTO ragequits (level, time, positionx, positiony) VALUES (?, ?, ?, ?)", ragequit.Level, ragequit.Time, ragequit.PositionX, ragequit.PositionY)
+		// fmt.Printf("time for ragequit: %d in level %d at Position %d,%d\n", ragequit.Time, ragequit.Level, ragequit.PositionX, ragequit.PositionY)
+		_, err = db.Exec("INSERT INTO ragequits (level, time, positionx, positiony) VALUES ($1, $2, $3, $4)", ragequit.Level, ragequit.Time, ragequit.PositionX, ragequit.PositionY)
 		if err != nil {
 			log.Print("can't insert into ragequits db: ", err)
 		}
@@ -92,8 +92,8 @@ func upload_win(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		fmt.Printf("time for win: %d in level %d\n", win.Time, win.Level)
-		_, err = db.Exec("INSERT INTO wins (level, time) VALUES (?, ?)", win.Level, win.Time)
+		// fmt.Printf("time for win: %d in level %d\n", win.Time, win.Level)
+		_, err = db.Exec("INSERT INTO wins (level, time) VALUES ($1, $2)", win.Level, win.Time)
 		if err != nil {
 			log.Print("can't insert into wins db ", err)
 		}
@@ -144,8 +144,8 @@ func upload_death(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		fmt.Printf("time for death: %d in level %d at Position %d,%d\n", death.Time, death.Level, death.PositionX, death.PositionY)
-		_, err = db.Exec("INSERT INTO deaths (level, time, positionx, positiony) VALUES (?, ?, ? ,?)", death.Level, death.Time, death.PositionX, death.PositionY)
+		// fmt.Printf("time for death: %d in level %d at Position %d,%d\n", death.Time, death.Level, death.PositionX, death.PositionY)
+		_, err = db.Exec("INSERT INTO deaths (level, time, positionx, positiony) VALUES ($1, $2, $3 ,$4)", death.Level, death.Time, death.PositionX, death.PositionY)
 		if err != nil {
 			log.Print("can't insert into deaths db ", err)
 		}

@@ -6,20 +6,18 @@ networks:
 
 services:
   database:
-    # build:
-    #   context: .
-    #   dockerfile: service.Dockerfile
-    image: mysql
-    container_name: chroma_core_teletric_database
+    image: postgres
+    container_name: chroma_core_telemetric_database
     environment:
-      #MYSQL_ROOT_PASSWORD: "L5LevyxEaFsP3p9TGnPddrY4RcZUHLQ3q8rEwL8K2bddBNzS9Q2TY697EWyX4VTB45HL7bkgpcxzTYnVU2v3HAfJTphMni2AYKVp5BtYUmuGgymK86fz2tYuYs9YSLNh"
-      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-      MYSQL_DATABASE: "telemetry"
+
+      POSTGRES_USER: "client"
+      POSTGRES_PASSWORD: "L5LevyxEaFsP3p9TGnPddrY4RcZUHLQ3q8rEwL8K2bddBNzS9Q2TY697EWyX4VTB45HL7bkgpcxzTYnVU2v3HAfJTphMni2AYKVp5BtYUmuGgymK86fz2tYuYs9YSLNh"
+      POSTGRES_DB: "telemetry"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./data:/var/lib/mysql
+      - ./data:/var/lib/posgresql
     ports:
-      - 3306:3306
+      - 5432:5432
     networks:
       - backend
     restart: unless-stopped
