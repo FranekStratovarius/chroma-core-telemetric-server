@@ -1,0 +1,1 @@
+cd upload && go run .
