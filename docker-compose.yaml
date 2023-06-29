@@ -2,6 +2,8 @@
 version: "3.8"
 
 networks:
+  swag_proxy:
+    external: true
   backend:
 
 services:
@@ -16,8 +18,8 @@ services:
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./data:/var/lib/posgresql
-    ports:
-      - 5432:5432
+    #ports:
+    #  - 5432:5432
     networks:
       - backend
     restart: unless-stopped
@@ -41,6 +43,7 @@ services:
         condition: service_healthy
     networks:
       - backend
-    ports:
-      - 1234:1234
+      - swag_proxy
+    #ports:
+    #  - 1234:1234
     restart: unless-stopped
