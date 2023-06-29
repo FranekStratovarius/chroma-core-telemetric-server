@@ -11,8 +11,7 @@ services:
     image: postgres
     container_name: chroma_core_telemetric_database
     environment:
-
-      POSTGRES_USER: "client"
+      POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "L5LevyxEaFsP3p9TGnPddrY4RcZUHLQ3q8rEwL8K2bddBNzS9Q2TY697EWyX4VTB45HL7bkgpcxzTYnVU2v3HAfJTphMni2AYKVp5BtYUmuGgymK86fz2tYuYs9YSLNh"
       POSTGRES_DB: "telemetry"
     volumes:
@@ -34,7 +33,7 @@ services:
       dockerfile: server.Dockerfile
     container_name: chroma_core_telemetric_server
     environment:
-      DBUSER: "client"
+      DBUSER: "root"
       DBPASS: "L5LevyxEaFsP3p9TGnPddrY4RcZUHLQ3q8rEwL8K2bddBNzS9Q2TY697EWyX4VTB45HL7bkgpcxzTYnVU2v3HAfJTphMni2AYKVp5BtYUmuGgymK86fz2tYuYs9YSLNh"
       DBHOST: "database:5432"
       DBNAME: "telemetry"
