@@ -2,8 +2,10 @@ package main
 
 import (
 	"database/sql"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -185,4 +187,24 @@ func upload_death(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	default:
 		fmt.Fprintf(w, "Sorry, only POST and GET methods are supported.\n")
 	}
+}
+
+func show_heatmap(w http.ResponseWriter, level int) {
+	imgFile, err := ioutil.ReadFile(fmt.Sprintf("level_0%d_heatmap.png", level))
+	if err != nil {
+		log.Printf("can't open level_0%d_heatmap.png", level)
+	}
+	fmt.Fprintf(
+		w,
+		`<div>
+			<h1>Level %d</h1>
+			<img src="data:image/png;charset=utf-8;base64,%s"/>
+		</div>`,
+		level,
+		base64.StdEncoding.EncodeToString(imgFile),
+	)
+}
+func show_heatmaps(w http.ResponseWriter, r *http.Request) {
+	show_heatmap(w, 1)
+	show_heatmap(w, 2)
 }

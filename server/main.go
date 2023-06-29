@@ -21,6 +21,18 @@ func main() {
 		log.Print(r)
 	})
 
+	http.HandleFunc("/get_heatmaps", func(w http.ResponseWriter, r *http.Request) {
+		log.Print("> /")
+		log.Print(r)
+		log.Print(r.Body)
+		show_heatmaps(w, r)
+	})
+	http.HandleFunc("/update_heatmaps", func(w http.ResponseWriter, r *http.Request) {
+		log.Print("> /")
+		log.Print(r)
+		log.Print(r.Body)
+		create_heatmap(db)
+	})
 	http.HandleFunc("/ragequit", func(w http.ResponseWriter, r *http.Request) {
 		log.Print("> /ragequit")
 		log.Print(r)
